@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['middleware' => ['auth:api']], function()
 {
-Route::post('/newadmin','UserController@newAdmin');
-Route::post('/showadmin','UserController@showAdmin');
-Route::post('/deleteadmin','UserController@deleteAdmin');
 Route::post('/updateadmin','UserController@updateAdmin');
-Route::post('/alladmins','UserController@allAdmins');
 });
+Route::resource('user', 'UserController');
