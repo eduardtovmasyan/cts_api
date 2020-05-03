@@ -28,7 +28,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-    	User::create($request->all());
+    	$validation = Validator::make(
+    	$request->all(),
+    	[
+    		'name' => 'required',
+    		'email' => 'required|email|unique:users,email',
+    		'phone' => 'nullable|numeric|unique:users,phone',
+    		'password' => 'required|min:6',
+    	]);
+
+    	if ($validation->fails()) {
+
+    	return response()->json(['errors' => $validation->errors()]);
+    	} else {
+    	$user = $request->all();
+    	$user['type'] = 'admin';
+    	User::create($user);
+    	}
     }
 
     /**
@@ -51,7 +67,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+    	$validation = Validator::make(
+    	$request->all(),
+    	[
+    		'name' => 'required',
+    		'email' => 'required|email',
+    		'phone' => 'nullable|numeric',
+    		'password' => 'required|min:6',
+    	]);
+    	
+    	$validation->after(function($validation) use($request){
+    	$mail = User::where('email', $request->email)->first();
+		$phone = User::where('phone', $request->phone)->first();
+
+    	if($phone['id'] == $request->id) {
+    		$validation->errors()->add('phone','The phone has already been taken.');
+    	}
+
+    	if ($mail['id'] == $request->id) {
+    		$validation->errors()->add('email','The email has already been taken.');
+    	}
+        });
+
+    	if ($validation->fails()) {
+
+    	return response()->json(['errors' => $validation->errors()]);
+    	} else {
     	User::whereId($id)->update($request->all());
+    	}
     }
 
     /**

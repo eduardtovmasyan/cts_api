@@ -15,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['middleware' => ['auth:api']], function()
 {
-Route::post('/updateadmin','UserController@updateAdmin');
-});
 Route::resource('user', 'UserController');
+});

@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'is_active' => true,
             'type' => 'admin',
+            'created_at' => now(),
         ]);
     }
 }
