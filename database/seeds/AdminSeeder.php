@@ -4,8 +4,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\User;
 
-class UserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +20,8 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'is_active' => true,
-            'type' => 'admin',
+            'type' => User::TYPE,
+            'updated_at' => now(),
             'created_at' => now(),
         ]);
     }
