@@ -15,14 +15,15 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        $timeNow = now();
         DB::table('users')->insert([
             'name' => Str::random(10),
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'is_active' => true,
-            'type' => User::TYPE,
-            'updated_at' => now(),
-            'created_at' => now(),
+            'type' => User::TYPE_ADMIN,
+            'updated_at' => $timeNow,
+            'created_at' => $timeNow,
         ]);
     }
 }

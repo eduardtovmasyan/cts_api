@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => ['auth:api']], function() {
-	Route::resource('admin', 'AdminController', [
-		'only' => ['index', 'store', 'show', 'update', 'destroy']
-	]);
+    Route::resource('admin', 'AdminController', [
+        'only' => ['index', 'store', 'show', 'update', 'destroy']
+    ]);
 });

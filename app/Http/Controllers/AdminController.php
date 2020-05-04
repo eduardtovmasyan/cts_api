@@ -17,7 +17,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = User::whichAdmin()->paginate(5);
+        $admins = User::whichAdmin()->paginate(Controller::PER_PAGE);
 
         return AdminResource::collection($admins);
     }
@@ -100,6 +100,6 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        User::whichAdmin()->destroy($id);
+        User::whichAdmin()->whereId($id)->delete();
     }
 }
