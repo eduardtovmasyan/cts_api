@@ -17,4 +17,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('admin', 'AdminController', [
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
+    Route::resource('group', 'GroupController', [
+        'only' => ['index', 'store', 'show', 'update', 'destroy']
+    ]);
 });
