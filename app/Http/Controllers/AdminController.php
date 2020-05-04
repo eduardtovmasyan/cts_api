@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Http\Resources\Admin as AdminResources;
+use App\Http\Resources\Admin as AdminResource;
 use Hash;
 use Validator;
 
@@ -17,8 +17,8 @@ class AdminController extends Controller
      */
 	public function index()
 	{
-    	return User::where('type',User::TYPE)->get();
-    }
+    	return AdminResource::collection(User::where('type',User::TYPE)->paginate(5));
+	}
 
     /**
      * Store a newly created resource in storage.
@@ -26,6 +26,7 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
     	$validation = Validator::make(
@@ -61,7 +62,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-    	return User::where('type', User::TYPE)->findOrFail($id);
+    	return new AdminResource(User::where('type', User::TYPE)->findOrFail($id));
     }
 
     /**
