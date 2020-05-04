@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['middleware' => ['auth:api']], function()
-{
-Route::resource('admin', 'AdminController', ['only' => ['index', 'store', 'show', 'update', 'destroy',]]);
+Route::group(['middleware' => ['auth:api']], function() {
+	Route::resource('admin', 'AdminController', [
+		'only' => ['index', 'store', 'show', 'update', 'destroy']
+	]);
 });

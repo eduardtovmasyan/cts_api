@@ -11,14 +11,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    
-    /*
-     *
-     *
-     *
-     *
+    /**
+     * @var string
      */
-    const TYPE = 'admin';
+    const TYPE_ADMIN = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -46,4 +42,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Filter the query by the user type, keep only admins.
+     *
+     * @param  mixed  $query
+     * @return mixed
+     */
+    public function scopeWhichAdmin($query)
+    {
+        return $query->where('type', self::TYPE_ADMIN);
+    }
 }
