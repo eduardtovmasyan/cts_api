@@ -12,7 +12,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * @var string
+     * @var int
      */
     const PER_PAGE = 5;
 }

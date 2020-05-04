@@ -17,7 +17,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = User::whichAdmin()->paginate(Controller::PER_PAGE);
+        $admins = User::whichAdmin()->paginate(parent::PER_PAGE);
 
         return AdminResource::collection($admins);
     }
