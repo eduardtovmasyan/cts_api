@@ -73,7 +73,8 @@ class SubjectController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
-
+        $subject = Subject::findOrFail($id);
+        
         return SubjectResource::make($subject);
     }
 
