@@ -22,8 +22,4 @@ class Subject extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
-    public function subject(){
-        return $this->hasMany('App\Topic','subject_id','id');
-    }
 }

@@ -14,4 +14,8 @@ class Topic extends Model
     protected $fillable = [
         'name', 'description', 'subject_id',
     ];
+
+    public function topics(){
+        return $this->belongsTo('App\Subject','subject_id','id');
+    }
 }

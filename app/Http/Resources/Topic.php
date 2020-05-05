@@ -23,8 +23,4 @@ class Topic extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
-    public function topics(){
-        return $this->belongsTo('App\Subject','subject_id','id');
-    }
 }
