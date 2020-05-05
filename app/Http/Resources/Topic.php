@@ -24,7 +24,7 @@ class Topic extends JsonResource
         ];
     }
 
-    public function topicBelongs(){
+    public function topics(){
         return $this->belongsTo('App\Subject','subject_id','id');
     }
 }

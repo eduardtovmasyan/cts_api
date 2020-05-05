@@ -23,7 +23,7 @@ class Subject extends JsonResource
         ];
     }
 
-    public function subjectHasMany(){
+    public function subject(){
         return $this->hasMany('App\Topic','subject_id','id');
     }
 }
