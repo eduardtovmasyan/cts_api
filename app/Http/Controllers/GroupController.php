@@ -7,7 +7,6 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Resources\Group as GroupResource;
 
-
 class GroupController extends Controller
 {
     /**
@@ -17,7 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::all();
+        $groups = Group::all()->paginate(parent::PER_PAGE);
 
         return GroupResource::collection($groups);
     }
@@ -31,16 +30,13 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'name' => 'required|unique:groups,name',
+            'name' => 'required|max:100|unique:groups,name',
             'description' => 'nullable',
         ])->validate();
 
-        $timeNow = now();
         $group = Group::create([
             'name' => $request->name,
             'description' => $request->description,
-            'updated_at' => $timeNow,
-            'created_at' => $timeNow,
         ]);
 
         return GroupResource::make($group);
@@ -49,31 +45,31 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Group  $group
+     * @param  \App\Group  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($group)
+    public function show($id)
     {
-        $singlegroup = Group::findOrFail($group);
+        $group = Group::findOrFail($id);
         
-        return GroupResource::make($singlegroup);
+        return GroupResource::make($group);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Group  $group
+     * @param  \App\Group  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $group)
+    public function update(Request $request, $id)
     {
         Validator::make($request->all(), [
-            'name' => 'required|unique:groups,name',
+            'name' => 'required|max:100|unique:groups,name',
             'description' => 'nullable',
         ])->validate();
 
-        Group::whereId($group)->update([
+        Group::whereId($id)->update([
             'name' => $request->name,
             'description' => $request->description,
         ]);
@@ -82,11 +78,11 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Group  $group
+     * @param  \App\Group  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($group)
+    public function destroy($id)
     {
-        Group::whereId($group)->delete();
+        Group::whereId($id)->delete();
     }
 }
