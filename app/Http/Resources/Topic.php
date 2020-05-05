@@ -18,9 +18,13 @@ class Topic extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'subject_id' => $this->subject_id,
+            'subject' => SubjectShortResource::make($this->subject),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
+    }
+
+    public function topicBelongs(){
+        return $this->belongsTo('App\Subject','subject_id','id');
     }
 }
