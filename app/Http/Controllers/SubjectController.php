@@ -73,6 +73,8 @@ class SubjectController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
+
+        return SubjectResource::make($subject);
     }
 
     /**
