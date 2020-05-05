@@ -30,7 +30,7 @@ class TopicController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:topics,name',
+            'name' => 'required|max:100|unique:topics,name,' . $id,
             'subject_id' => 'required|exists:subjects,id',
             'description' => 'nullable',
         ])->validate();
@@ -77,6 +77,8 @@ class TopicController extends Controller
             'subject_id' => $request->subject_id,
             'description' => $request->description,
         ]);
+
+        return TopicResource::make($topic);
     }
 
     /**

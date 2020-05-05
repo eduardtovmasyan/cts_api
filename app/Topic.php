@@ -15,7 +15,7 @@ class Topic extends Model
         'name', 'description', 'subject_id',
     ];
 
-    public function topics(){
+    public function subject(){
         return $this->belongsTo('App\Subject','subject_id','id');
     }
 }

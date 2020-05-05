@@ -15,7 +15,7 @@ class Subject extends Model
         'name', 'description',
     ];
     
-    public function subject(){
+    public function topics(){
         return $this->hasMany('App\Topic','subject_id','id');
     }
 }
