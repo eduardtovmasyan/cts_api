@@ -16,7 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::all()->paginate(parent::PER_PAGE);
+        $groups = Group::paginate(parent::PER_PAGE);
 
         return GroupResource::collection($groups);
     }
