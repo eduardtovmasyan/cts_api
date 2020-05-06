@@ -68,6 +68,7 @@ class SubjectController extends Controller
             'name' => 'required|max:100|unique:subjects,name,' . $id,
             'description' => 'string|max:65000|nullable',
         ])->validate();
+        
         $subject = Subject::findOrFail($id);
         $subject->update([
             'name' => $request->name,
