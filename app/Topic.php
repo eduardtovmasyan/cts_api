@@ -4,19 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model
+class Topic extends Model
 {
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'description',
+        'name', 'description', 'subject_id',
     ];
-    
-    public function topics()
+
+    public function subject()
     {
-        return $this->hasMany('App\Topic', 'subject_id', 'id');
+        return $this->belongsTo('App\Subject', 'subject_id', 'id');
     }
 }
