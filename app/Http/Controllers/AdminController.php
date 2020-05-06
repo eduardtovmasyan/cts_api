@@ -38,14 +38,11 @@ class AdminController extends Controller
             'is_active' => 'required|boolean',
         ])->validate();
 
-        $timeNow = now();
         $admin = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'is_active' => $request->is_active,
-            'updated_at' => $timeNow,
-            'created_at' => $timeNow,
             'type' => User::TYPE_ADMIN,
             'password' => Hash::make($request->password),
         ]);
