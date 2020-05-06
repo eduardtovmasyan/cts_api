@@ -71,13 +71,13 @@ class TopicController extends Controller
             'subject_id' => 'required|exists:subjects,id',
             'description' => 'string|max:65000|nullable',
         ])->validate();
+        
         $topic = Topic::findOrFail($id);
         $topic->update([
             'name' => $request->name,
             'subject_id' => $request->subject_id,
             'description' => $request->description,
         ]);
-
 
         return TopicResource::make($topic);
     }
