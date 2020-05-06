@@ -31,7 +31,7 @@ class SubjectController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required|max:100|unique:subjects,name',
-            'description' => 'nullable',
+            'description' => 'string|max:65000|nullable',
         ])->validate();
 
         $subject = Subject::create([
@@ -66,14 +66,13 @@ class SubjectController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required|max:100|unique:subjects,name,' . $id,
-            'description' => 'nullable',
+            'description' => 'string|max:65000|nullable',
         ])->validate();
-
-        Subject::whereId($id)->update([
+        $subject = Subject::findOrFail($id);
+        $subject->update([
             'name' => $request->name,
             'description' => $request->description,
         ]);
-        $subject = Subject::findOrFail($id);
         
         return SubjectResource::make($subject);
     }
