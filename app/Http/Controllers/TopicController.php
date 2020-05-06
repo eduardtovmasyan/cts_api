@@ -32,7 +32,7 @@ class TopicController extends Controller
         Validator::make($request->all(), [
             'name' => 'required|max:100|unique:topics,name',
             'subject_id' => 'required|exists:subjects,id',
-            'description' => 'nullable',
+            'description' => 'string|max:65000|nullable',
         ])->validate();
 
         $topic = Topic::create([
@@ -69,16 +69,15 @@ class TopicController extends Controller
         Validator::make($request->all(), [
             'name' => 'required|max:100|unique:topics,name,' . $id,
             'subject_id' => 'required|exists:subjects,id',
-            'description' => 'nullable',
+            'description' => 'string|max:65000|nullable',
         ])->validate();
-
-        Topic::whereId($id)->update([
+        $topic = Topic::findOrFail($id);
+        $topic->update([
             'name' => $request->name,
             'subject_id' => $request->subject_id,
             'description' => $request->description,
         ]);
 
-        $topic = Topic::findOrFail($id);
 
         return TopicResource::make($topic);
     }
