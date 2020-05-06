@@ -31,7 +31,7 @@ class GroupController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required|max:100|unique:groups,name',
-            'description' => 'nullable',
+            'description' => 'string|max:65000|nullable',
         ])->validate();
 
         $group = Group::create([
@@ -66,13 +66,16 @@ class GroupController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required|max:100|unique:groups,name,' . $id,
-            'description' => 'nullable',
+            'description' => 'string|max:65000|nullable',
         ])->validate();
 
-        Group::whereId($id)->update([
+        $group = Group::findOrFail($id);
+        $group->update([
             'name' => $request->name,
             'description' => $request->description,
         ]);
+        
+        return GroupResource::make($group);
     }
 
     /**

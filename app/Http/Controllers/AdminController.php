@@ -80,13 +80,16 @@ class AdminController extends Controller
             'is_active' => 'required|boolean',
         ])->validate();
 
-        User::whichAdmin()->whereId($id)->update([
+        $admin = User::whichAdmin()->findOrFail($id);
+        $admin->update([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'is_active' => $request->is_active,
             'password' => Hash::make($request->password),
         ]);
+
+        return AdminResource::make($admin);
     }
 
     /**
