@@ -6,9 +6,10 @@ use Validator;
 use App\Question;
 use App\QuestionOption;
 use Illuminate\Http\Request;
-use App\Http\Resources\Question as QuestionResource;
+use App\Http\Resources\QuestionList as QuestionList;
+use App\Http\Resources\OneChoiceQuestion as OneChoiceQuestion;
 
-class QuestionController extends Controller
+class OneChoiceQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class QuestionController extends Controller
     {
         $questions = Question::all();
 
-        return QuestionResource::collection($questions);
+        return QuestionList::collection($questions);
     }
 
     /**
@@ -34,6 +35,8 @@ class QuestionController extends Controller
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
             'options' => 'required|array',
+            'options.*.option' => 'required|max:100',
+            'options.*.is_right' => 'required|boolean',
         ])->validate();
       
         $question = Question::create([
@@ -41,26 +44,13 @@ class QuestionController extends Controller
             'type' => Question::TYPE_ONE_CHOICE,
             'question' => $request->question,
         ]);
-        $options = [];
-        $timeNow = now();
-        
+
         foreach ($request->options as $option) {
-            $options[] = [
-                'question_id' => $question->id,
-                'option' => $option['option'],
-                'is_right' => $option['is_right'],
-                'created_at' => $timeNow,
-                'updated_at' => $timeNow,
-            ];
+            $options[] = QuestionOption::make($option);
         }
+        $question->options()->saveMany($options);
 
-        Validator::make($options, [
-            '*.option' => 'required|max:100',
-            '*.is_right' => 'required|boolean',
-        ])->validate();
-        $question->options()->insert($options);
-
-        return QuestionResource::make($question);
+        return OneChoiceQuestion::make($question);
     }
 
     /**
@@ -73,7 +63,7 @@ class QuestionController extends Controller
     {
         $question = Question::findOrFail($id);
 
-        return QuestionResource::make($question);
+        return OneChoiceQuestion::make($question);
     }
 
     /**
@@ -87,38 +77,25 @@ class QuestionController extends Controller
     {
         Validator::make($request->all(), [
             'topic_id' => 'required|exists:topics,id',
-            'type' => 'required',
             'question' => 'required|string|max:65000',
             'options' => 'required|array',
+            'options.*.option' => 'required|max:100',
+            'options.*.is_right' => 'required|boolean',
         ])->validate();
         
         $question = Question::findOrFail($id);
         $question->update([
             'topic_id' => $request->topic_id,
-            'type' => $request->type,
             'question' => $request->question,
         ]);
-        $options = [];
+        $question->options()->delete();
         
         foreach ($request->options as $option) {
-            $options[] = [
-                'question_id' => $question->id,
-                'option' => $option['option'],
-                'is_right' => $option['is_right'],
-                'created_at' => $question->created_at,
-                'updated_at' => now(),
-            ];
+            $options[] = QuestionOption::make($option);
         }
-
-        Validator::make($options, [
-            '*.option' => 'required|max:100',
-            '*.is_right' => 'required|boolean',
-        ])->validate();
-
-        $question->options()->delete();
-        $question->options()->insert($options);
-
-        return QuestionResource::make($question);
+        $question->options()->saveMany($options);
+        
+        return OneChoiceQuestion::make($question);
     }
 
     /**

@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Option as OptionShortResource;
+use Illuminate\Support\Str;
 
-class Question extends JsonResource
+class QuestionList extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +19,7 @@ class Question extends JsonResource
             'id' => $this->id,
             'topic_id' => $this->topic_id,
             'type' => $this->type,
-            'question' => $this->question,
-            'options' => OptionShortResource::collection($this->options),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'question' =>Str::limit($this->question, 50, $end='...'),
         ];
     }
 }

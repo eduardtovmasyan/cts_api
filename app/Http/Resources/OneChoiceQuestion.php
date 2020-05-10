@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Option as OptionShortResource;
 
-class Option extends JsonResource
+class OneChoiceQuestion extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +17,10 @@ class Option extends JsonResource
     {
         return [
             'id' => $this->id,
-            'option' => $this->option,
-            'is_right' => $this->is_right,
+            'topic_id' => $this->topic_id,
+            'type' => $this->type,
+            'question' => $this->question,
+            'options' => OptionShortResource::collection($this->options),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
