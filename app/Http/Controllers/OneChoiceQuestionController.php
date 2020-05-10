@@ -6,8 +6,8 @@ use Validator;
 use App\Question;
 use App\QuestionOption;
 use Illuminate\Http\Request;
-use App\Http\Resources\QuestionPromo as QuestionPromo;
-use App\Http\Resources\OneChoiceQuestion as OneChoiceQuestion;
+use App\Http\Resources\QuestionShort;
+use App\Http\Resources\OneChoiceQuestion;
 
 class OneChoiceQuestionController extends Controller
 {
@@ -20,7 +20,7 @@ class OneChoiceQuestionController extends Controller
     {
         $questions = Question::all();
 
-        return QuestionPromo::collection($questions);
+        return QuestionShort::collection($questions);
     }
 
     /**
@@ -85,16 +85,16 @@ class OneChoiceQuestionController extends Controller
         ])->validate();
         
         $question = Question::findOrFail($id);
+
+        foreach ($request->options as $option) {
+            $options[] = QuestionOption::make($option);
+        }
+
         $question->update([
             'topic_id' => $request->topic_id,
             'question' => $request->question,
         ]);
         $question->options()->delete();
-        
-        foreach ($request->options as $option) {
-            $options[] = QuestionOption::make($option);
-        }
-
         $question->options()->saveMany($options);
         
         return OneChoiceQuestion::make($question);

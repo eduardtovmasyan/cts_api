@@ -14,7 +14,7 @@ class Question extends Model
     const TYPE_BOOLEAN = 'True/False Question';
     const TYPE_SHORT_ANSWER = 'Short Answer Question';
 
-  /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
