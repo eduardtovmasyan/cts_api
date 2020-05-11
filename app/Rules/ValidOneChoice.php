@@ -34,7 +34,7 @@ class ValidOneChoice implements Rule
                 }
             }
 
-            if ($rightAnswers < 2 && $rightAnswers > 0) {
+            if ($rightAnswers == 1) {
                 return true;
             }
         }
