@@ -29,7 +29,7 @@ class ValidOneChoiceOptions implements Rule
 
         if (is_array($value) && count($value) >= 2) {
             foreach ($value as $option) {
-                if ($option['is_right']) {
+                if (@$option['is_right']) {
                     $rightAnswers++;
                 }
             }
