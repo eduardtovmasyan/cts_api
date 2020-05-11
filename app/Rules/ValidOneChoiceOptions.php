@@ -49,6 +49,6 @@ class ValidOneChoiceOptions implements Rule
      */
     public function message()
     {
-        return 'There must be at least two options, only one of which should be the correct answer.';
+        return __('validation.invalid_one_choice_options');
     }
 }
