@@ -26,6 +26,7 @@ class ValidOneChoice implements Rule
     public function passes($attribute, $value)
     {
         $rightAnswers = 0;
+        
         if (!empty($value) && is_array($value) && count($value) >= 2) {
 
             foreach ($value as $option) {
