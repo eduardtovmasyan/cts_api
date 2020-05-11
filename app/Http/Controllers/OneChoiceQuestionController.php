@@ -6,7 +6,7 @@ use Validator;
 use App\Question;
 use App\QuestionOption;
 use Illuminate\Http\Request;
-use App\Rules\ValidOneChoice;
+use App\Rules\ValidOneChoiceOptions;
 use App\Http\Resources\OneChoiceQuestion;
 use App\Http\Resources\OneChoiceQuestionShort;
 
@@ -35,7 +35,7 @@ class OneChoiceQuestionController extends Controller
         Validator::make($request->all(), [
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
-            'options' => new ValidOneChoice,
+            'options' => new ValidOneChoiceOptions,
             'options.*.option' => 'required|max:100',
             'options.*.is_right' => 'required|boolean',
         ])->validate();
@@ -80,7 +80,7 @@ class OneChoiceQuestionController extends Controller
         Validator::make($request->all(), [
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
-            'options' => 'required|array',
+            'options' => new ValidOneChoiceOptions,
             'options.*.option' => 'required|max:100',
             'options.*.is_right' => 'required|boolean',
         ])->validate();

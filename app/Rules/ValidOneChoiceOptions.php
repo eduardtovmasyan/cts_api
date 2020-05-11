@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidOneChoice implements Rule
+class ValidOneChoiceOptions implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,9 +26,8 @@ class ValidOneChoice implements Rule
     public function passes($attribute, $value)
     {
         $rightAnswers = 0;
-        
-        if (!empty($value) && is_array($value) && count($value) >= 2) {
 
+        if (is_array($value) && count($value) >= 2) {
             foreach ($value as $option) {
                 if ($option['is_right']) {
                     $rightAnswers++;
@@ -50,6 +49,6 @@ class ValidOneChoice implements Rule
      */
     public function message()
     {
-        return 'There should be only one right answer.';
+        return 'There must be at least two options, only one of which should be the correct answer.';
     }
 }
