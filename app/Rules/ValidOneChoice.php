@@ -25,15 +25,16 @@ class ValidOneChoice implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (!empty($value) && is_array($value)) {
+        $rightAnswers = 0;
+        if (!empty($value) && is_array($value) && count($value) >= 2) {
 
             foreach ($value as $option) {
-                if ($option['is_right'] == true) {
-                    $true[] = $option['is_right'];
+                if ($option['is_right']) {
+                    $rightAnswers++;
                 }
             }
 
-            if (count($true) < 2) {
+            if ($rightAnswers < 2 && $rightAnswers > 0) {
                 return true;
             }
         }
