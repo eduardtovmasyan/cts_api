@@ -49,6 +49,6 @@ class ValidOneChoiceOptions implements Rule
      */
     public function message()
     {
-        return __('validation.invalid_one_choice_options');
+        return trans('validation.invalid_one_choice_options');
     }
 }

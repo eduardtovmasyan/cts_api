@@ -93,7 +93,6 @@ return [
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
     'numeric' => 'The :attribute must be a number.',
-    'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
@@ -130,10 +129,8 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+    'invalid_one_choice_options' => [
+        'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
     ],
 
     /*
