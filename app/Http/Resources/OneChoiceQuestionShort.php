@@ -18,7 +18,6 @@ class OneChoiceQuestionShort extends JsonResource
         return [
             'id' => $this->id,
             'topic_id' => $this->topic_id,
-            'type' => $this->type,
             'question' => Str::limit($this->question, 50, '...'),
         ];
     }

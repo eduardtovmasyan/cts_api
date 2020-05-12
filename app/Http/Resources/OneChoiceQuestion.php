@@ -18,7 +18,6 @@ class OneChoiceQuestion extends JsonResource
         return [
             'id' => $this->id,
             'topic_id' => $this->topic_id,
-            'type' => $this->type,
             'question' => $this->question,
             'options' => OptionShortResource::collection($this->options),
             'created_at' => $this->created_at,
