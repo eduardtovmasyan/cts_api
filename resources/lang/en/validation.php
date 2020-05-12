@@ -129,11 +129,7 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
+    'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
 
     /*
     |--------------------------------------------------------------------------

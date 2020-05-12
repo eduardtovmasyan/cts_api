@@ -29,4 +29,8 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('group', 'GroupController', [
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
+    
+    Route::resource('one-choice-question', 'OneChoiceQuestionController', [
+        'only' => ['index', 'store', 'show', 'update', 'destroy']
+    ]);
 });
