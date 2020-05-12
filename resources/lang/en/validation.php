@@ -129,9 +129,7 @@ return [
     |
     */
 
-    'invalid_one_choice_options' => [
-        'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
-    ],
+    'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
 
     /*
     |--------------------------------------------------------------------------
