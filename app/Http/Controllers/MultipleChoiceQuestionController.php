@@ -7,8 +7,8 @@ use App\Question;
 use App\QuestionOption;
 use Illuminate\Http\Request;
 use App\Rules\ValidMultiplyChoiceOptions;
-use App\Http\Resources\OneAndMultiplyChoiceQuestion;
-use App\Http\Resources\OneAndMultiplyChoiceQuestionShort;
+use App\Http\Resources\OptionalQuestion;
+use App\Http\Resources\OptionalQuestionShort;
 
 class MultipleChoiceQuestionController extends Controller
 {
@@ -21,7 +21,7 @@ class MultipleChoiceQuestionController extends Controller
     {
         $questions = Question::where('type', Question::TYPE_MULTIPLE_CHOICE)->get();
 
-        return OneAndMultiplyChoiceQuestionShort::collection($questions);
+        return OptionalQuestionShort::collection($questions);
     }
 
     /**
@@ -54,7 +54,7 @@ class MultipleChoiceQuestionController extends Controller
 
         $question->options()->saveMany($options);
 
-        return OneAndMultiplyChoiceQuestion::make($question);
+        return OptionalQuestion::make($question);
     }
 
     /**
@@ -67,7 +67,7 @@ class MultipleChoiceQuestionController extends Controller
     {
         $question = Question::where('type', Question::TYPE_MULTIPLE_CHOICE)->findOrFail($id);
 
-        return OneAndMultiplyChoiceQuestion::make($question);
+        return OptionalQuestion::make($question);
     }
 
     /**
@@ -102,7 +102,7 @@ class MultipleChoiceQuestionController extends Controller
         $question->options()->delete();
         $question->options()->saveMany($options);
         
-        return OneAndMultiplyChoiceQuestion::make($question);
+        return OptionalQuestion::make($question);
     }
 
     /**
