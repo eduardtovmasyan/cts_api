@@ -6,11 +6,11 @@ use Validator;
 use App\Question;
 use App\QuestionOption;
 use Illuminate\Http\Request;
-use App\Rules\ValidOneChoiceOptions;
+use App\Rules\ValidMultiplyChoiceOptions;
 use App\Http\Resources\OneAndMultiplyChoiceQuestion;
 use App\Http\Resources\OneAndMultiplyChoiceQuestionShort;
 
-class OneChoiceQuestionController extends Controller
+class MultipleChoiceQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class OneChoiceQuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::where('type', Question::TYPE_ONE_CHOICE)->get();
+        $questions = Question::where('type', Question::TYPE_MULTIPLE_CHOICE)->get();
 
         return OneAndMultiplyChoiceQuestionShort::collection($questions);
     }
@@ -36,7 +36,7 @@ class OneChoiceQuestionController extends Controller
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
             'options' => [
-                'required', 'array', new ValidOneChoiceOptions
+                'required', 'array', new ValidMultiplyChoiceOptions
             ],
             'options.*.option' => 'required|max:100',
             'options.*.is_right' => 'required|boolean',
@@ -44,7 +44,7 @@ class OneChoiceQuestionController extends Controller
       
         $question = Question::create([
             'topic_id' => $request->topic_id,
-            'type' => Question::TYPE_ONE_CHOICE,
+            'type' => Question::TYPE_MULTIPLE_CHOICE,
             'question' => $request->question,
         ]);
 
@@ -65,7 +65,7 @@ class OneChoiceQuestionController extends Controller
      */
     public function show($id)
     {
-        $question = Question::where('type', Question::TYPE_ONE_CHOICE)->findOrFail($id);
+        $question = Question::where('type', Question::TYPE_MULTIPLE_CHOICE)->findOrFail($id);
 
         return OneAndMultiplyChoiceQuestion::make($question);
     }
@@ -83,7 +83,7 @@ class OneChoiceQuestionController extends Controller
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
             'options' => [
-                'required', 'array', new ValidOneChoiceOptions
+                'required', 'array', new ValidMultiplyChoiceOptions
             ],
             'options.*.option' => 'required|max:100',
             'options.*.is_right' => 'required|boolean',
@@ -113,6 +113,6 @@ class OneChoiceQuestionController extends Controller
      */
     public function destroy($id)
     {
-        Question::where('type', Question::TYPE_ONE_CHOICE)->AndMultiplywhereId($id)->delete();
+        Question::where('type', Question::TYPE_MULTIPLE_CHOICE)->whereId($id)->delete();
     }
 }
