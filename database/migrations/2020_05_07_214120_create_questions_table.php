@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedBigInteger('topic_id');
             $table->string('type', 25)->index();
             $table->text('question');
+            $table->string('answer')->nullable();
             $table->timestamps();
         });
     }
