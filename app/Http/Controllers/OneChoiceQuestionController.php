@@ -113,6 +113,6 @@ class OneChoiceQuestionController extends Controller
      */
     public function destroy($id)
     {
-        Question::where('type', Question::TYPE_ONE_CHOICE)->AndMultiplywhereId($id)->delete();
+        Question::where('type', Question::TYPE_ONE_CHOICE)->whereId($id)->delete();
     }
 }

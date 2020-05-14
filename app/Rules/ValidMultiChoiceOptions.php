@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidMultiplyChoiceOptions implements Rule
+class ValidMultiChoiceOptions implements Rule
 {
     /**
      * Create a new rule instance.
@@ -34,7 +34,7 @@ class ValidMultiplyChoiceOptions implements Rule
                 }
             }
 
-            if ($rightAnswers > 1) {
+            if ($rightAnswers >= 1) {
                 return true;
             }
         }
@@ -49,6 +49,6 @@ class ValidMultiplyChoiceOptions implements Rule
      */
     public function message()
     {
-        return trans('validation.invalid_multiply_choice_options');
+        return trans('validation.invalid_multi_choice_options');
     }
 }

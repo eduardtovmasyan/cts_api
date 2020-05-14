@@ -6,7 +6,7 @@ use Validator;
 use App\Question;
 use App\QuestionOption;
 use Illuminate\Http\Request;
-use App\Rules\ValidMultiplyChoiceOptions;
+use App\Rules\ValidMultiChoiceOptions;
 use App\Http\Resources\OptionalQuestion;
 use App\Http\Resources\OptionalQuestionShort;
 
@@ -36,7 +36,7 @@ class MultipleChoiceQuestionController extends Controller
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
             'options' => [
-                'required', 'array', new ValidMultiplyChoiceOptions
+                'required', 'array', new ValidMultiChoiceOptions
             ],
             'options.*.option' => 'required|max:100',
             'options.*.is_right' => 'required|boolean',
@@ -83,7 +83,7 @@ class MultipleChoiceQuestionController extends Controller
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
             'options' => [
-                'required', 'array', new ValidMultiplyChoiceOptions
+                'required', 'array', new ValidMultiChoiceOptions
             ],
             'options.*.option' => 'required|max:100',
             'options.*.is_right' => 'required|boolean',
