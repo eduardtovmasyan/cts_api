@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Option as OptionShortResource;
 
-class OneChoiceQuestion extends JsonResource
+class OptionalQuestion extends JsonResource
 {
     /**
      * Transform the resource into an array.
