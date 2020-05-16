@@ -20,7 +20,7 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'question', 'type', 'topic_id',
+        'question', 'type', 'topic_id', 'answer',
     ];
 
     public function options()
