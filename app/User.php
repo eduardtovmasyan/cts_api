@@ -15,6 +15,7 @@ class User extends Authenticatable
      * @var string
      */
     const TYPE_ADMIN = 'admin';
+    const TYPE_TESTEE = 'testee';
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'type', 'is_active',
+        'name', 'email', 'password', 'phone', 'type', 'is_active', 'group_id',
     ];
 
     /**
@@ -52,5 +53,16 @@ class User extends Authenticatable
     public function scopeWhichAdmin($query)
     {
         return $query->where('type', self::TYPE_ADMIN);
+    }
+
+    /**
+     * Filter the query by the user type, keep only admins.
+     *
+     * @param  mixed  $query
+     * @return mixed
+     */
+    public function scopeWhichTestee($query)
+    {
+        return $query->where('type', self::TYPE_TESTEE);
     }
 }

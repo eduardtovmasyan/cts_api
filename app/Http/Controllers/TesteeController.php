@@ -1,4 +1,4 @@
-<?php
+|string|max:255<?php
 
 namespace App\Http\Controllers;
 
@@ -6,9 +6,9 @@ use Hash;
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
-use App\Http\Resources\Admin as AdminResource;
+use App\Http\Resources\Testee as TesteeResource;
 
-class AdminController extends Controller
+class TesteeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = User::whichAdmin()->paginate(parent::PER_PAGE);
+        $testee = User::whichTestee()->paginate(parent::PER_PAGE);
 
-        return AdminResource::collection($admins);
+        return TesteeResource::collection($testee);
     }
 
     /**
@@ -36,18 +36,20 @@ class AdminController extends Controller
             'phone' => 'nullable|numeric|unique:users,phone',
             'password' => 'required|min:6',
             'is_active' => 'required|boolean',
+            'group_id' => 'required|exists:groups,id',
         ])->validate();
 
-        $admin = User::create([
+        $testee = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'is_active' => $request->is_active,
-            'type' => User::TYPE_ADMIN,
+            'group_id' => $request->group_id,
+            'type' => User::TYPE_TESTEE,
             'password' => Hash::make($request->password),
         ]);
 
-        return AdminResource::make($admin);
+        return TesteeResource::make($testee);
     }
 
     /**
@@ -58,9 +60,9 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $admin = User::whichAdmin()->findOrFail($id);
+        $testee = User::whichTestee()->findOrFail($id);
 
-        return AdminResource::make($admin);
+        return TesteeResource::make($testee);
     }
 
     /**
@@ -78,18 +80,20 @@ class AdminController extends Controller
             'phone' => 'nullable|numeric|unique:users,phone,' . $id,
             'password' => 'required|min:6',
             'is_active' => 'required|boolean',
+            'group_id' => 'required|exists:groups,id',
         ])->validate();
 
-        $admin = User::whichAdmin()->findOrFail($id);
-        $admin->update([
+        $testee = User::whichTestee()->findOrFail($id);
+        $testee->update([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'is_active' => $request->is_active,
+            'group_id' => $request->group_id,
             'password' => Hash::make($request->password),
         ]);
 
-        return AdminResource::make($admin);
+        return TesteeResource::make($testee);
     }
 
     /**
@@ -100,6 +104,6 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        User::whichAdmin()->whereId($id)->delete();
+        User::whichTestee()->whereId($id)->delete();
     }
 }
