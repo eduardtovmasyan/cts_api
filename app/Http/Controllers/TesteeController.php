@@ -6,7 +6,7 @@ use Hash;
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
-use App\Http\Resources\Admin as TesteeResource;
+use App\Http\Resources\Testee as TesteeResource;
 
 class TesteeController extends Controller
 {
@@ -30,7 +30,26 @@ class TesteeController extends Controller
      */
     public function store(Request $request)
     {
-        
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'nullable|numeric|unique:users,phone',
+            'password' => 'required|min:6',
+            'is_active' => 'required|boolean',
+            'group_id' => 'required|exists:groups,id',
+        ])->validate();
+
+        $testee = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'is_active' => $request->is_active,
+            'group_id' => $request->group_id,
+            'type' => User::TYPE_TESTEE,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return TesteeResource::make($testee);
     }
 
     /**
