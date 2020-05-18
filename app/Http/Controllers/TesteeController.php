@@ -60,7 +60,9 @@ class TesteeController extends Controller
      */
     public function show($id)
     {
-        //
+        $testee = User::whichTestee()->findOrFail($id);
+
+        return TesteeResource::make($testee);
     }
 
     /**
@@ -72,7 +74,26 @@ class TesteeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'nullable|numeric|unique:users,phone,' . $id,
+            'password' => 'required|min:6',
+            'is_active' => 'required|boolean',
+            'group_id' => 'required|exists:groups,id',
+        ])->validate();
+
+        $testee = User::whichTestee()->findOrFail($id);
+        $testee->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'is_active' => $request->is_active,
+            'group_id' => $request->group_id,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return TesteeResource::make($testee);
     }
 
     /**
@@ -83,6 +104,6 @@ class TesteeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::whichTestee()->whereId($id)->delete();
     }
 }
