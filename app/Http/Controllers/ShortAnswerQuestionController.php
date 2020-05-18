@@ -33,7 +33,7 @@ class ShortAnswerQuestionController extends Controller
         Validator::make($request->all(), [
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
-            'answer' => 'required|max:255',
+            'answer' => 'required|string|max:255',
         ])->validate();
       
         $question = Question::create([
@@ -71,7 +71,7 @@ class ShortAnswerQuestionController extends Controller
         Validator::make($request->all(), [
             'topic_id' => 'required|exists:topics,id',
             'question' => 'required|string|max:65000',
-            'answer' => 'required|max:50',
+            'answer' => 'required|string|max:255',
         ])->validate();
 
         $question = Question::findOrFail($id);
