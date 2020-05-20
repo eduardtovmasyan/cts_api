@@ -26,7 +26,7 @@ class AddForeignKeyGroupIdToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('group_id');
+            $table->dropForeign(['group_id']);
         });
     }
 }

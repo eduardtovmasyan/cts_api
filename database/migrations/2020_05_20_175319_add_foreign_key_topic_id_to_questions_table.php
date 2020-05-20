@@ -26,7 +26,7 @@ class AddForeignKeyTopicIdToQuestionsTable extends Migration
     public function down()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->dropForeign('topic_id');
+            $table->dropForeign(['topic_id']);
         });
     }
 }
