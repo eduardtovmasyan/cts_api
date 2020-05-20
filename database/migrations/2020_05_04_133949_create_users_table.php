@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('type')->index();
             $table->boolean('is_active')->default(false);
             $table->unsignedBigInteger('group_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
