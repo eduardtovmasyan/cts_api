@@ -17,7 +17,7 @@ class ShortAnswerQuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::where('type', Question::TYPE_SHORT_ANSWER)->get();
+        $questions = Question::where('type', Question::TYPE_SHORT_ANSWER)->paginate(parent::PER_PAGE);
 
         return QuestionShort::collection($questions);
     }

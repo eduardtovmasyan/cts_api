@@ -49,4 +49,8 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('short-answer-question', 'ShortAnswerQuestionController', [
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
+    
+    Route::resource('test', 'TestController', [
+        'only' => ['index', 'store', 'show', 'update', 'destroy']
+    ]);
 });

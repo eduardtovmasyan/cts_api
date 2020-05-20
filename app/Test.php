@@ -12,7 +12,7 @@ class Test extends Model
      * @var array
      */
     protected $fillable = [
-        'subject_id', 'group_id', 'start', 'end',
+        'subject_id', 'group_id', 'start', 'end', 'title', 'description',
     ];
 
     public function subject()
@@ -23,5 +23,10 @@ class Test extends Model
     public function group()
     {
         return $this->hasOne('App\Group');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany('App\TestQuestion');
     }
 }
