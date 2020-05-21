@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TestQuestion;
+use App\Http\Resources\TesteeGroupShort;
+use App\Http\Resources\TesteeSubjectShort;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class Test extends JsonResource
 {
@@ -17,8 +19,8 @@ class Test extends JsonResource
     {
         return [
             'id' => $this->id,
-            'subject_id' => $this->subject_id,
-            'group_id' => $this->group_id,
+            'subject' => TesteeSubjectShort::make($this->subject),
+            'group' => TesteeGroupShort::make($this->group),
             'start' => $this->start,
             'end' => $this->end,
             'title' => $this->title,

@@ -7,7 +7,7 @@ use App\Test;
 use App\TestQuestion;
 use Illuminate\Http\Request;
 use App\Rules\ValidTestQuestionsScore;
-use App\Http\Resources\Test as TestAndQuestions;
+use App\Http\Resources\Test as TestResource;
 
 class TestController extends Controller
 {
@@ -20,7 +20,7 @@ class TestController extends Controller
     {
         $tests = Test::paginate(parent::PER_PAGE);
 
-        return TestAndQuestions::collection($tests);
+        return TestResource::collection($tests);
     }
 
     /**
@@ -33,15 +33,15 @@ class TestController extends Controller
     {
         Validator::make($request->all(), [
             'subject_id' => 'required|exists:subjects,id',
-            'group_id' => 'required|exists:groups,id',
+            'group_id' => 'required|nullable|exists:groups,id',
             'start' => 'required|date|after:now',
             'end' => 'required|date|after:start',
-            'description' => 'string|max:65000|nullable',
+            'description' => 'required|string|max:65000|nullable',
             'title' => 'string|max:255',
             'questions' => [
                 'required', 'array', new ValidTestQuestionsScore
             ],
-            'questions.*.score' => 'required|numeric',
+            'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.question_id' => 'required|exists:questions,id',
         ])->validate();
       
@@ -53,14 +53,9 @@ class TestController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
+        $test->questions()->attach($request->questions);
 
-        foreach ($request->questions as $question) {
-            $questions[] = TestQuestion::make($question);
-        }
-
-        $test->questions()->saveMany($questions);
-
-        return TestAndQuestions::make($test);
+        return TestResource::make($test);
     }
 
     /**
@@ -73,7 +68,7 @@ class TestController extends Controller
     {
         $test = Test::findOrFail($id);
 
-        return TestAndQuestions::make($test);
+        return TestResource::make($test);
     }
 
     /**
@@ -87,24 +82,19 @@ class TestController extends Controller
     {
         Validator::make($request->all(), [
             'subject_id' => 'required|exists:subjects,id',
-            'group_id' => 'required|exists:groups,id',
+            'group_id' => 'required|nullable|exists:groups,id',
             'start' => 'required|date|after:now',
             'end' => 'required|date|after:start',
-            'description' => 'string|max:65000|nullable',
+            'description' => 'required|string|max:65000|nullable',
             'title' => 'string|max:255',
             'questions' => [
                 'required', 'array', new ValidTestQuestionsScore
             ],
-            'questions.*.score' => 'required|numeric',
+            'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.question_id' => 'required|exists:questions,id',
         ])->validate();
         
         $test = Test::findOrFail($id);
-
-        foreach ($request->questions as $question) {
-            $questions[] = TestQuestion::make($question);
-        }
-
         $test->update([
             'subject_id' => $request->subject_id,
             'group_id' => $request->group_id,
@@ -113,10 +103,9 @@ class TestController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
-        $test->questions()->delete();
-        $test->questions()->saveMany($questions);
-        
-        return TestAndQuestions::make($test);
+        $test->questions()->sync($request->questions);
+
+        return TestResource::make($test);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TestQuestion extends JsonResource
+class TesteeSubjectShort extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,7 @@ class TestQuestion extends JsonResource
     {
         return [
             'id' => $this->id,
-            'score' => $this->pivot->score,
-            'topic' =>  Topic::make($this->topic),
-            'type' => $this->type,
-            'question' => $this->question,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'name' => $this->name,
         ];
     }
 }

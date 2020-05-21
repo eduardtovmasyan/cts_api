@@ -131,7 +131,7 @@ return [
 
     'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
     'invalid_multi_choice_options' => 'There must be at more than two options, minimum two of them must be right answers.',
-    'invalid_total_score' => 'Total score must equal 100.',
+    'invalid_test_questions_total_score' => 'The sum of the questions scores must be equal to 100.',
 
     /*
     |--------------------------------------------------------------------------

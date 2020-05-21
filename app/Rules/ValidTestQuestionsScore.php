@@ -31,11 +31,7 @@ class ValidTestQuestionsScore implements Rule
             $score += $question['score'];
         }
 
-        if ($score != 100) {
-            return false;
-        } 
-
-        return true;
+        return $score === 100;
     }
 
     /**
@@ -45,6 +41,6 @@ class ValidTestQuestionsScore implements Rule
      */
     public function message()
     {
-        return trans('validation.invalid_total_score');
+        return trans('validation.invalid_test_questions_total_score');
     }
 }

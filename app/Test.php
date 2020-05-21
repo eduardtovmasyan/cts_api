@@ -17,16 +17,16 @@ class Test extends Model
 
     public function subject()
     {
-        return $this->hasOne('App\Subject');
+        return $this->belongsTo(Subject::class);
     }
 
     public function group()
     {
-        return $this->hasOne('App\Group');
+        return $this->belongsTo(Group::class);
     }
 
     public function questions()
     {
-        return $this->hasMany('App\TestQuestion');
+        return $this->belongsToMany(Question::class, 'test_questions', 'test_id', 'question_id')->withPivot('score')->withTimestamps();
     }
 }
