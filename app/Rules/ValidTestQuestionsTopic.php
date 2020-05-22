@@ -2,9 +2,10 @@
 
 namespace App\Rules;
 
+use App\Question;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidTestQuestionsScore implements Rule
+class ValidTestQuestionsTopic implements Rule
 {
     /**
      * Create a new rule instance.
@@ -25,13 +26,21 @@ class ValidTestQuestionsScore implements Rule
      */
     public function passes($attribute, $value)
     {
-        $score = 0;
+        $questions = [];
+        $topic_id = [];
 
         foreach ($value as $question) {
-            $score += $question['score'];
+            $questions[] = $question['question_id'];
+        }
+        $data = Question::findMany($questions);
+
+        foreach ($data as $key) {
+            $topic_id[] = $key->topic_id;
         }
 
-        return $score === 100;
+        $same = array_count_values($topic_id);
+
+        return count($same) === 1;
     }
 
     /**
@@ -41,6 +50,6 @@ class ValidTestQuestionsScore implements Rule
      */
     public function message()
     {
-        return trans('validation.invalid_test_questions_total_score');
+        return trans('validation.invalid_test_questions_topic');
     }
 }

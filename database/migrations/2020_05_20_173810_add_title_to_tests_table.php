@@ -15,6 +15,7 @@ class AddTitleToTestsTable extends Migration
     {
         Schema::table('tests', function (Blueprint $table) {
             $table->string('title')->after('end');
+            $table->text('description')->after('title')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddTitleToTestsTable extends Migration
     {
         Schema::table('tests', function (Blueprint $table) {
             $table->dropColumn('title');
+            $table->dropColumn('description');
         });
     }
 }

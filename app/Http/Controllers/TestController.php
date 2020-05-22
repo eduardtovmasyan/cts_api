@@ -6,7 +6,8 @@ use Validator;
 use App\Test;
 use App\TestQuestion;
 use Illuminate\Http\Request;
-use App\Rules\ValidTestQuestionsScore;
+use App\Rules\ValidTestQuestionsTopic;
+use App\Rules\ValidTestQuestionsTotalScore;
 use App\Http\Resources\Test as TestResource;
 
 class TestController extends Controller
@@ -37,9 +38,9 @@ class TestController extends Controller
             'start' => 'required|date|after:now',
             'end' => 'required|date|after:start',
             'description' => 'required|string|max:65000|nullable',
-            'title' => 'string|max:255',
+            'title' => 'required|string|max:255',
             'questions' => [
-                'required', 'array', new ValidTestQuestionsScore
+                'required', 'array', new ValidTestQuestionsTotalScore, new ValidTestQuestionsTopic
             ],
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.question_id' => 'required|exists:questions,id',
@@ -86,9 +87,9 @@ class TestController extends Controller
             'start' => 'required|date|after:now',
             'end' => 'required|date|after:start',
             'description' => 'required|string|max:65000|nullable',
-            'title' => 'string|max:255',
+            'title' => 'required|string|max:255',
             'questions' => [
-                'required', 'array', new ValidTestQuestionsScore
+                'required', 'array', new ValidTestQuestionsTotalScore, new ValidTestQuestionsTopic
             ],
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.question_id' => 'required|exists:questions,id',
