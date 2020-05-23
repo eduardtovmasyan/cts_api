@@ -27,8 +27,8 @@ class ValidTestQuestionsTotalScore implements Rule
     {
         $score = 0;
 
-        if (isset($question['score'])) {
-            foreach ($value as $question) {
+        foreach ($value as $question) {
+            if (isset($question['score'])) {
                 $score += $question['score'];
             }
         }

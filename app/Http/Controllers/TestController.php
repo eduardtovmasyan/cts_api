@@ -6,6 +6,7 @@ use Validator;
 use App\Test;
 use App\TestQuestion;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Rules\ValidTestQuestionsTopic;
 use App\Rules\ValidTestQuestionsTotalScore;
 use App\Http\Resources\Test as TestResource;
@@ -40,10 +41,12 @@ class TestController extends Controller
             'description' => 'required|string|max:65000|nullable',
             'title' => 'required|string|max:255',
             'questions' => [
-                'required', 'array', new ValidTestQuestionsTotalScore, new ValidTestQuestionsTopic
+                'required', 'array', new ValidTestQuestionsTotalScore
             ],
             'questions.*.score' => 'required|integer|between:1,100',
-            'questions.*.question_id' => 'required|exists:questions,id',
+            'questions.*.id' => [
+                'required', 'exists:questions,id',  new ValidTestQuestionsTopic($request->subject_id)
+            ],
         ])->validate();
       
         $test = Test::create([
@@ -89,10 +92,12 @@ class TestController extends Controller
             'description' => 'required|string|max:65000|nullable',
             'title' => 'required|string|max:255',
             'questions' => [
-                'required', 'array', new ValidTestQuestionsTotalScore, new ValidTestQuestionsTopic
+                'required', 'array', new ValidTestQuestionsTotalScore
             ],
             'questions.*.score' => 'required|integer|between:1,100',
-            'questions.*.question_id' => 'required|exists:questions,id',
+            'questions.*.id' => [
+                'required', 'exists:questions,id',  new ValidTestQuestionsTopic($request->subject_id)
+            ],
         ])->validate();
         
         $test = Test::findOrFail($id);

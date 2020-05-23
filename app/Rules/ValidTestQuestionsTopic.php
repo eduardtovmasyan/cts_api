@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Question;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Validation\Rule;
 
 class ValidTestQuestionsTopic implements Rule
@@ -12,9 +12,9 @@ class ValidTestQuestionsTopic implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($subject_id)
     {
-        //
+        $this->subject_id = $subject_id;
     }
 
     /**
@@ -26,21 +26,11 @@ class ValidTestQuestionsTopic implements Rule
      */
     public function passes($attribute, $value)
     {
-        $questions = [];
-        $topic_id = [];
+        $question_subject = DB::table('questions')
+            ->join('topics', 'topics.id', '=', 'questions.topic_id')
+            ->first();
 
-        foreach ($value as $question) {
-            $questions[] = $question['question_id'];
-        }
-        $data = Question::findMany($questions);
-
-        foreach ($data as $key) {
-            $topic_id[] = $key->topic_id;
-        }
-
-        $same = array_count_values($topic_id);
-
-        return count($same) === 1;
+        return  $question_subject->subject_id === $this->subject_id;
     }
 
     /**
