@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidTestQuestionsTopic implements Rule
+class ValidTestQuestionTopic implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,11 +26,11 @@ class ValidTestQuestionsTopic implements Rule
      */
     public function passes($attribute, $value)
     {
-        $questionSubject = DB::table('questions')
+        return DB::table('questions')
             ->join('topics', 'topics.id', '=', 'questions.topic_id')
-            ->first();
-
-        return  $questionSubject->subjectId === $this->subjectId;
+            ->where('questions.id', $value)
+            ->where('topics.subject_id', $this->subjectId)
+            ->exists();
     }
 
     /**
@@ -40,6 +40,6 @@ class ValidTestQuestionsTopic implements Rule
      */
     public function message()
     {
-        return trans('validation.invalid_test_questions_topic');
+        return trans('validation.invalid_test_question_topic');
     }
 }

@@ -7,7 +7,7 @@ use App\Test;
 use App\TestQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Rules\ValidTestQuestionsTopic;
+use App\Rules\ValidTestQuestionTopic;
 use App\Rules\ValidTestQuestionsTotalScore;
 use App\Http\Resources\Test as TestResource;
 
@@ -35,17 +35,17 @@ class TestController extends Controller
     {
         Validator::make($request->all(), [
             'subject_id' => 'required|exists:subjects,id',
-            'group_id' => 'required|nullable|exists:groups,id',
+            'group_id' => 'nullable|exists:groups,id',
             'start' => 'required|date|after:now',
             'end' => 'required|date|after:start',
-            'description' => 'required|string|max:65000|nullable',
+            'description' => 'nullable|string|max:65000',
             'title' => 'required|string|max:255',
             'questions' => [
                 'required', 'array', new ValidTestQuestionsTotalScore
             ],
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.id' => [
-                'required', 'exists:questions,id',  new ValidTestQuestionsTopic($request->subject_id)
+                'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
             ],
         ])->validate();
       
@@ -86,17 +86,17 @@ class TestController extends Controller
     {
         Validator::make($request->all(), [
             'subject_id' => 'required|exists:subjects,id',
-            'group_id' => 'required|nullable|exists:groups,id',
+            'group_id' => 'nullable|exists:groups,id',
             'start' => 'required|date|after:now',
             'end' => 'required|date|after:start',
-            'description' => 'required|string|max:65000|nullable',
+            'description' => 'nullable|string|max:65000',
             'title' => 'required|string|max:255',
             'questions' => [
                 'required', 'array', new ValidTestQuestionsTotalScore
             ],
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.id' => [
-                'required', 'exists:questions,id',  new ValidTestQuestionsTopic($request->subject_id)
+                'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
             ],
         ])->validate();
         

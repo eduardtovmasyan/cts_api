@@ -30,7 +30,8 @@ class Question extends Model
 
     public function tests()
     {
-        return $this->belongsToMany(Test::class, 'test_questions', 'question_id', 'test_id')->withPivot('score')->withTimestamps();
+        return $this->belongsToMany(Test::class, 'test_questions', 'question_id', 'test_id')
+        ->withPivot('score')->withTimestamps();
     }
 
     public function topic()
