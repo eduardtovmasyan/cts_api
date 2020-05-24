@@ -12,9 +12,9 @@ class ValidTestQuestionsTopic implements Rule
      *
      * @return void
      */
-    public function __construct($subject_id)
+    public function __construct($subjectId)
     {
-        $this->subject_id = $subject_id;
+        $this->subjectId = $subjectId;
     }
 
     /**
@@ -26,11 +26,11 @@ class ValidTestQuestionsTopic implements Rule
      */
     public function passes($attribute, $value)
     {
-        $question_subject = DB::table('questions')
+        $questionSubject = DB::table('questions')
             ->join('topics', 'topics.id', '=', 'questions.topic_id')
             ->first();
 
-        return  $question_subject->subject_id === $this->subject_id;
+        return  $questionSubject->subjectId === $this->subjectId;
     }
 
     /**
