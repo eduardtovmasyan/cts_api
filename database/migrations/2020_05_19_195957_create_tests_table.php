@@ -18,7 +18,7 @@ class CreateTestsTable extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->unsignedBigInteger('group_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->dateTime('start');
             $table->dateTime('end');
             $table->timestamps();

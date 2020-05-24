@@ -17,7 +17,7 @@ class TestQuestion extends JsonResource
         return [
             'id' => $this->id,
             'score' => $this->pivot->score,
-            'topic' =>  Topic::make($this->topic),
+            'topic' =>  TopicShort::make($this->topic),
             'type' => $this->type,
             'question' => $this->question,
             'created_at' => $this->created_at,

@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TesteeQuestionShort extends JsonResource
+class TopicShort extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +16,7 @@ class TesteeQuestionShort extends JsonResource
     {
         return [
             'id' => $this->id,
-            'topic' => TopicShort::make($this->topic),
-            'question' => Str::limit($this->question, 50, '...'),
+            'name' => $this->name,
         ];
     }
 }

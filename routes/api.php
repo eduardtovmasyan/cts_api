@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth:api']], function() {
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
     
+});
     Route::resource('test', 'TestController', [
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
-});
