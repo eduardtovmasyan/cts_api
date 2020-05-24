@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\TestQuestion;
-use App\Http\Resources\TesteeGroupShort;
-use App\Http\Resources\TesteeSubjectShort;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Test extends JsonResource
