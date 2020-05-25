@@ -19,7 +19,7 @@ class OneChoiceQuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::where('type', Question::TYPE_ONE_CHOICE)->get();
+        $questions = Question::where('type', Question::TYPE_ONE_CHOICE)->paginate(parent::PER_PAGE);
 
         return OptionalQuestionShort::collection($questions);
     }
