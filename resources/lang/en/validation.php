@@ -131,9 +131,8 @@ return [
 
     'invalid_one_choice_options' => 'There must be at least two options, only one of which should be the correct answer.',
     'invalid_multi_choice_options' => 'There must be at more than two options, minimum two of them must be right answers.',
-    'invalid_test_questions_total_score' => 'The sum of the questions scores must exist and it must be equal to 100.',
     'invalid_test_question_topic' => 'The question topic should be one of the topics of the test subject.',
-
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

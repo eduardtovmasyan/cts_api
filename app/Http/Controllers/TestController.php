@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\TestShort;
 use App\Rules\ValidTestQuestionTopic;
-use App\Rules\ValidTestQuestionsTotalScore;
 use App\Http\Resources\Test as TestResource;
 
 class TestController extends Controller
