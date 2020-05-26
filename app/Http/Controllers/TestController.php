@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\TestShort;
 use App\Rules\ValidTestQuestionTopic;
-use App\Rules\ValidTestQuestionsTotalScore;
 use App\Http\Resources\Test as TestResource;
 
 class TestController extends Controller
@@ -41,15 +40,19 @@ class TestController extends Controller
             'end' => 'required|date|after:start',
             'description' => 'nullable|string|max:65000',
             'title' => 'required|string|max:255',
-            'questions' => [
-                'required', 'array', new ValidTestQuestionsTotalScore
-            ],
+            'questions' => 'required|array',
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.id' => [
                 'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
             ],
         ])->validate();
-      
+
+        $questions = [];
+
+        foreach ($request->questions as $i => $question) {
+            $questions[$question['id']] = ['score' => $question['score']];
+        }
+
         $test = Test::create([
             'subject_id' => $request->subject_id,
             'group_id' => $request->group_id,
@@ -58,7 +61,8 @@ class TestController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
-        $test->questions()->attach($request->questions);
+
+        $test->questions()->attach($questions);
 
         return TestResource::make($test);
     }
@@ -92,15 +96,19 @@ class TestController extends Controller
             'end' => 'required|date|after:start',
             'description' => 'nullable|string|max:65000',
             'title' => 'required|string|max:255',
-            'questions' => [
-                'required', 'array', new ValidTestQuestionsTotalScore
-            ],
+            'questions' => 'required|array',
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.id' => [
                 'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
             ],
         ])->validate();
-        
+
+        $questions = [];
+
+        foreach ($request->questions as $i => $question) {
+            $questions[$question['id']] = ['score' => $question['score']];
+        }
+
         $test = Test::findOrFail($id);
         $test->update([
             'subject_id' => $request->subject_id,
@@ -110,7 +118,7 @@ class TestController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
-        $test->questions()->sync($request->questions);
+        $test->questions()->sync($questions);
 
         return TestResource::make($test);
     }
