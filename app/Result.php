@@ -12,7 +12,7 @@ class Result extends Model
      * @var array
      */
     protected $fillable = [
-        'total', 'user_id', 'test_id',
+        'score', 'user_id', 'test_id',
     ];
 
     public function user()
@@ -20,8 +20,13 @@ class Result extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function Test()
+    public function test()
     {
         return $this->belongsTo(Test::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

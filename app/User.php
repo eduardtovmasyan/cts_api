@@ -66,11 +66,6 @@ class User extends Authenticatable
         return $query->where('type', self::TYPE_TESTEE);
     }
 
-    public function answers()
-    {
-        return $this->hasMany(Answer::class);
-    }
-
     public function results()
     {
         return $this->hasMany(Result::class);

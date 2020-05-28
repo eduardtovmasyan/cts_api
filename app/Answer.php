@@ -12,16 +12,11 @@ class Answer extends Model
      * @var array
      */
     protected $fillable = [
-        'answer', 'is_right', 'user_id', 'test_id', 'question_id',
+        'answer', 'is_right', 'question_id', 'result_id',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function question()
-    {
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Result::class);
     }
 }
