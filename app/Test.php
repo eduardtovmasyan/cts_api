@@ -30,4 +30,9 @@ class Test extends Model
         return $this->belongsToMany(Question::class, 'test_questions', 'test_id', 'question_id')
                    ->withPivot('score')->withTimestamps();
     }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 }
