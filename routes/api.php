@@ -59,5 +59,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('testeeresult/{id}', 'AdminTestResultController@GetTesteeResult');
     
     Route::get('groupresult/{id}', 'AdminTestResultController@GetGroupResult');
+   
+    Route::post('takeatest', 'TakeATestController@TakeATest');
 });
-
