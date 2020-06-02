@@ -77,26 +77,31 @@ class TestingController extends Controller
 
         if ($testeeResult == 100) {
             $message = ['Perfect' => $testeeResult];
+
             return $message;
         } 
 
         elseif ($testeeResult < 100 && $testeeResult > 89) {
             $message = ['Excellent' => $testeeResult];
+
             return $message;
         }
 
         elseif ($testeeResult < 90 && $testeeResult > 69) {
             $message = ['Good' => $testeeResult];
+
             return $message;
         }
 
         elseif ($testeeResult < 70 && $testeeResult > 50) {
             $message = ['A sufficient amount' => $testeeResult];
+
             return $message;
         }
 
         else{
             $message = ['Unacceptably' => $testeeResult];
+
             return $message;
         }
     }
