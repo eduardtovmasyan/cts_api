@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdminGroupResult extends JsonResource
+class TestResult extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,14 @@ class AdminGroupResult extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'subject' => TesteeSubjectShort::make($this->subject),
+            'group' => TesteeGroupShort::make($this->group),
+            'start' => $this->start,
+            'end' => $this->end,
+            'title' => $this->title,
             'description' => $this->description,
+            'questions' => TestQuestion::collection($this->questions),
+            'results' =>  $this->results,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

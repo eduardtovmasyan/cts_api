@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Test;
 use Illuminate\Http\Request;
-use App\Http\Resources\AdminTestResult;
+use App\Http\Resources\TestResult;
 
 class AdminTestResultController extends Controller
 {
@@ -13,39 +13,39 @@ class AdminTestResultController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function GetTestResultById($id)
+    public function getTestResultById($id)
     {
-        $TestResults = Test::findOrFail($id)->with('results')->get();
+        $testResults = Test::findOrFail($id)->with('results')->get();
 
-        return AdminTestResult::collection($TestResults);
+        return TestResult::collection($testResults);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function GetTesteeResult($id)
+    public function getTesteeResult($id)
     {
-        $TestResults = User::with('results')->whereId($id)->get();
+        $testResults = User::with('results')->whereId($id)->get();
 
-        return AdminTestResult::collection($TestResults);
+        return TestResult::collection($testResults);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function GetGroupResult($id)
+    public function getGroupResult($id)
     {
-        $TestResults = Test::where('group_id', $id)->with('results')->get();
+        $testResults = Test::where('group_id', $id)->with('results')->get();
 
-        return AdminTestResult::collection($TestResults);
+        return TestResult::collection($testResults);
     }
 }
