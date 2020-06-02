@@ -7,7 +7,7 @@ use App\Test;
 use Illuminate\Http\Request;
 use App\Http\Resources\TestResult;
 
-class AdminTestResultController extends Controller
+class TestResultController extends Controller
 {
 
     /**
