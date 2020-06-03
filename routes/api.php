@@ -63,4 +63,8 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('resultsdetails/{id}', 'TestResultController@getResultDetails');
    
     Route::post('testing', 'TestingController@submitResult');
+
+    Route::get('testee/test/{id}/result', 'TestResultController@gettestResultById');
+
+    Route::get('testee/group/{id}/result', 'TestResultController@getGroupResult');
 });

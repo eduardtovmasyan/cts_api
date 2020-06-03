@@ -6,9 +6,9 @@ use App\User;
 use App\Test;
 use App\Result;
 use Illuminate\Http\Request;
-use App\Http\Resources\Result as ResultDetails;
 use App\Http\Resources\TestResult;
 use App\Http\Resources\TesteeTestResult;
+use App\Http\Resources\Result as ResultDetails;
 
 class TestResultController extends Controller
 {
