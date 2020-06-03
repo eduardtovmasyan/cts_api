@@ -54,11 +54,13 @@ Route::group(['middleware' => ['auth:api']], function() {
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
 
-    Route::get('test/{id}/result', 'TestResultController@GettestResultById');
+    Route::get('test/{id}/result', 'TestResultController@gettestResultById');
 
     Route::get('testee/{id}/result', 'TestResultController@getTesteeResult');
     
     Route::get('group/{id}/result', 'TestResultController@getGroupResult');
+
+    Route::get('resultsdetails/{id}', 'TestResultController@getResultDetails');
    
     Route::post('testing', 'TestingController@submitResult');
 });

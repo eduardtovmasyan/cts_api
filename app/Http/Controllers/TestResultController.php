@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Test;
+use App\Result;
 use Illuminate\Http\Request;
+use App\Http\Resources\Result as ResultDetails;
 use App\Http\Resources\TestResult;
+use App\Http\Resources\TesteeTestResult;
 
 class TestResultController extends Controller
 {
@@ -31,9 +34,9 @@ class TestResultController extends Controller
      */
     public function getTesteeResult($id)
     {
-        $testResults = User::with('results')->whereId($id)->get();
+        $testResults = User::where('type', User::TYPE_TESTEE)->with('results')->whereId($id)->get();
 
-        return TestResult::collection($testResults);
+        return TesteeTestResult::collection($testResults);
     }
 
     /**
@@ -48,4 +51,18 @@ class TestResultController extends Controller
 
         return TestResult::collection($testResults);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getResultDetails($id)
+    {
+        $result = Result::whereId($id)->with('answers')->get();
+
+        return ResultDetails::collection($result);
+    }
 }
+

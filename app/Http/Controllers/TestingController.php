@@ -22,8 +22,8 @@ class TestingController extends Controller
             'user_id' => 'required|exists:users,id',
             'test_id' => 'required|exists:tests,id',
             'answers' => 'required|array',
-            'answers.*.answer' => 'required|max:100',
-            'answers.*.question_id' => 'required|numeric|exists:questions,id',
+            'answers.*.answer' => 'required|max:255',
+            'answers.*.question_id' => 'required|exists:questions,id',
         ])->validate();
 
         $testQuestions = Test::findOrFail($request->test_id)->questions()->get()->toArray();
@@ -94,7 +94,7 @@ class TestingController extends Controller
         else{
             $message = ['Unacceptably' => $testeeResult];
         }
-        
+
         return $message;
     }
 }
