@@ -27,8 +27,8 @@ class TestingController extends Controller
         ])->validate();
 
         $testQuestions = Test::findOrFail($request->test_id)->questions()->get()->toArray();
-        $dbQuestions=[];
-        $questions=[];
+        $dbQuestions = [];
+        $questions= [];
         $isRight = [];
         $totalScore = 0;
         $score = 0;

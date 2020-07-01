@@ -54,17 +54,22 @@ Route::group(['middleware' => ['auth:api']], function() {
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
 
+    Route::get('test/{testId}/result', 'TestResultController@index');
+    Route::get('group/{groupId}/result', 'GroupResultController@index');
+    Route::get('testee/{userId}/result', 'TesteeResultController@index');
+    Route::get('result/{resultId}/answers', 'ResultController@index');
+
     Route::get('test/{id}/result', 'TestResultController@gettestResultById');
 
-    Route::get('testee/{id}/result', 'TestResultController@getTesteeResult');
+    // Route::get('testee/{id}/result', 'TestResultController@getTesteeResult');
     
-    Route::get('group/{id}/result', 'TestResultController@getGroupResult');
+    // Route::get('group/{id}/result', 'TestResultController@getGroupResult');
 
-    Route::get('resultsdetails/{id}', 'TestResultController@getResultDetails');
+    // Route::get('resultsdetails/{id}', 'TestResultController@getResultDetails');
    
     Route::post('testing', 'TestingController@submitResult');
 
-    Route::get('testee/test/{id}/result', 'TestResultController@gettestResultById');
+    // Route::get('testee/test/{id}/result', 'TestResultController@gettestResultById');
 
-    Route::get('testee/group/{id}/result', 'TestResultController@getGroupResult');
+    // Route::get('testee/group/{id}/result', 'TestResultController@getGroupResult');
 });

@@ -19,7 +19,6 @@ class Result extends JsonResource
             'score' => $this->score,
             'user_id' => $this->user_id,
             'test_id' => $this->test_id,
-            'answers' => $this->answers,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
