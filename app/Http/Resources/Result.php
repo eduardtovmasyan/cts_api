@@ -17,8 +17,8 @@ class Result extends JsonResource
         return [
             'id' => $this->id,
             'score' => $this->score,
-            'user_id' => $this->user_id,
-            'test_id' => $this->test_id,
+            'user' => Testee::make($this->user),
+            'test' => TestShort::make($this->test),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -19,11 +19,11 @@ class ResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($resultId)
+    public function show($resultId)
     {
-        $result = Result::whereId($resultId)->answers();
+        $result = Result::whereId($resultId)->paginate(parent::PER_PAGE);
 
-        return Answer::collection($result);
+        return ResultResource::collection($result);
     }
 
     /**
