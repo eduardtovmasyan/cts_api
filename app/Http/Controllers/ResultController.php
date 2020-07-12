@@ -21,9 +21,9 @@ class ResultController extends Controller
      */
     public function show($resultId)
     {
-        $result = Result::whereId($resultId)->paginate(parent::PER_PAGE);
+        $result = Result::whereId($resultId)->first();
 
-        return ResultResource::collection($result);
+        return ResultResource::make($result);
     }
 
     /**
@@ -32,7 +32,6 @@ class ResultController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
         Validator::make($request->all(), [

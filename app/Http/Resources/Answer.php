@@ -19,9 +19,6 @@ class Answer extends JsonResource
             'answer' => $this->answer,
             'is_right' => $this->is_right,
             'question_id' => $this->question_id,
-            'result_id' => $this->result_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }

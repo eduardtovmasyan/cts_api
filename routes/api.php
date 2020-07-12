@@ -55,11 +55,11 @@ Route::group(['middleware' => ['auth:api']], function() {
     ]);
 
     Route::resource('result', 'ResultController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
+        'only' => ['store', 'show']
     ]);
 
     Route::get('test/{testId}/result', 'TestResultController@index');
     Route::get('group/{groupId}/result', 'GroupResultController@index');
     Route::get('testee/{userId}/result', 'TesteeResultController@index');
-    Route::get('result/{resultId}/answers', 'ResultController@index');
+    Route::get('result/{resultId}/answers', 'ResultAnswerController@index');
 });
