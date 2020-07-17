@@ -38,4 +38,35 @@ class Question extends Model
     {
         return $this->belongsTo(Topic::class);
     }
+
+    public function isOptional()
+    {
+        return $this->type === self::TYPE_MULTIPLE_CHOICE
+            || $this->type === self::TYPE_ONE_CHOICE;
+    }
+
+    public function isCorrectAnswer($answer)
+    {
+        if ($this->type === self::TYPE_SHORT_ANSWER) {
+            return $answer === $this->answer;
+        } elseif ($this->type === self::TYPE_BOOLEAN) {
+            return boolval($answer) === boolval($this->answer);
+        } elseif ($this->type === self::TYPE_MULTIPLE_CHOICE) {
+            if (is_array($answer)) {
+                $rightOptions = $this->options->where('is_right', true)->pluck('id')->all();
+                sort($rightOptions);
+                sort($answer);
+
+                return $answer === $rightOptions;
+            }
+
+            return false;
+        } elseif ($this->type === self::TYPE_ONE_CHOICE) {
+            $rightAnswer = $this->options->where('is_right', true)->first()->id;
+
+            return $answer === $rightAnswer;
+        }
+
+        return false;
+    }
 }

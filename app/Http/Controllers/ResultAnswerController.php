@@ -11,6 +11,7 @@ class ResultAnswerController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param mixed $resultId
      * @return \Illuminate\Http\Response
      */
     public function index($resultId)
