@@ -17,7 +17,7 @@ class ResultAnswerController extends Controller
     public function index($resultId)
     {
         $answers = Answer::where('result_id', $resultId)->paginate(parent::PER_PAGE);
-
+        
         return AnswerResource::collection($answers);
     }
 }
