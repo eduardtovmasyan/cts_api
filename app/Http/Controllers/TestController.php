@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use App\Test;
+use Validator;
 use App\TestQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;

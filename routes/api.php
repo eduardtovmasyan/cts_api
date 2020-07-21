@@ -53,4 +53,13 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('test', 'TestController', [
         'only' => ['index', 'store', 'show', 'update', 'destroy']
     ]);
+
+    Route::resource('result', 'ResultController', [
+        'only' => ['store', 'show']
+    ]);
+
+    Route::get('test/{testId}/results', 'TestResultController@index');
+    Route::get('group/{groupId}/results', 'GroupResultController@index');
+    Route::get('testee/{userId}/results', 'TesteeResultController@index');
+    Route::get('result/{resultId}/answers', 'ResultAnswerController@index');
 });

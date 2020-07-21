@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Question;
 use Illuminate\Http\Request;
-use App\Http\Resources\Question as BooleanQuestion;
 use App\Http\Resources\QuestionShort;
+use App\Http\Resources\Question as BooleanQuestion;
 
 class BooleanQuestionController extends Controller
 {
