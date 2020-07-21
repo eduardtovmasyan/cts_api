@@ -10,6 +10,7 @@ use App\Question;
 use App\AnswerOption;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Result as ResultResource;
 
@@ -40,7 +41,12 @@ class ResultController extends Controller
             'test_id' => 'required|exists:tests,id',
             'answers' => 'required|array',
             'answers.*.answer' => 'required',
-            'answers.*.question_id' => 'required|exists:test_questions,question_id',
+            'answers.*.question_id' => [
+                'required',
+                Rule::exists('test_questions')->where(function ($query) use ($request) {
+                    $query->where('test_id', $request->test_id);
+                }),
+            ],
         ])->validate();
 
         $test = Test::findOrFail($request->test_id);
