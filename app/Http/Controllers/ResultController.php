@@ -23,7 +23,7 @@ class ResultController extends Controller
      */
     public function show($resultId)
     {
-        $result = Result::whereId($resultId)->first();
+        $result = Result::findOrFail($resultId);
 
         return ResultResource::make($result);
     }
