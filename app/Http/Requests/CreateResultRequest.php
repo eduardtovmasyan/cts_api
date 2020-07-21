@@ -19,8 +19,8 @@ class CreateResultRequest extends Request
             'answers.*.answer' => 'required',
             'answers.*.question_id' => [
                 'required',
-                Rule::exists('test_questions')->where(function ($query) use ($request) {
-                    $query->where('test_id', $request->test_id);
+                Rule::exists('test_questions')->where(function ($query) use ($this) {
+                    $query->where('test_id', $this->test_id);
                 }),
             ],
         ];

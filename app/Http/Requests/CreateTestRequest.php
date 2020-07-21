@@ -23,7 +23,7 @@ class CreateTestRequest extends Request
             'questions' => 'required|array',
             'questions.*.score' => 'required|integer|between:1,100',
             'questions.*.id' => [
-                'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
+                'required', 'exists:questions,id',  new ValidTestQuestionTopic($this->subject_id)
             ],
         ];
     }
