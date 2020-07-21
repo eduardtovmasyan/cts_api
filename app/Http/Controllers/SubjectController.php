@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Subject;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateSubjectRequest;
+use App\Http\Requests\UpdateSubjectRequest;
 use App\Http\Resources\Subject as SubjectResource;
 
 class SubjectController extends Controller
@@ -27,13 +28,8 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSubjectRequest $request)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:subjects,name',
-            'description' => 'string|max:65000|nullable',
-        ])->validate();
-
         $subject = Subject::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -62,13 +58,8 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSubjectRequest $request, $id)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:subjects,name,' . $id,
-            'description' => 'string|max:65000|nullable',
-        ])->validate();
-        
         $subject = Subject::findOrFail($id);
         $subject->update([
             'name' => $request->name,

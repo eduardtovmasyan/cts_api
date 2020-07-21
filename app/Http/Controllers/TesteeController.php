@@ -1,11 +1,12 @@
-|string|max:255<?php
+<?php
 
 namespace App\Http\Controllers;
 
 use Hash;
 use App\User;
 use Validator;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateTesteeRequest;
+use App\Http\Requests\UpdateTesteeRequest;
 use App\Http\Resources\Testee as TesteeResource;
 
 class TesteeController extends Controller
@@ -28,17 +29,8 @@ class TesteeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTesteeRequest $request)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|numeric|unique:users,phone',
-            'password' => 'required|min:6',
-            'is_active' => 'required|boolean',
-            'group_id' => 'required|exists:groups,id',
-        ])->validate();
-
         $testee = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -72,7 +64,7 @@ class TesteeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTesteeRequest $request, $id)
     {
         Validator::make($request->all(), [
             'name' => 'required|string|max:255',

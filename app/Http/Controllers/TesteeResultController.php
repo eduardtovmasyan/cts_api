@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Result;
-use Illuminate\Http\Request;
 use App\Http\Resources\Result as ResultResource;
 
 class TesteeResultController extends Controller

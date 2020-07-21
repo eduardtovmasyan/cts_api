@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Question;
 use App\QuestionOption;
-use Illuminate\Http\Request;
-use App\Rules\ValidOneChoiceOptions;
 use App\Http\Resources\OptionalQuestion;
 use App\Http\Resources\OptionalQuestionShort;
-
+use App\Http\Requests\CreateOneChoiceQuestionRequest;
+use App\Http\Requests\UpdateOneChoiceQuestionRequest;
 class OneChoiceQuestionController extends Controller
 {
     /**
@@ -30,18 +29,8 @@ class OneChoiceQuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOneChoiceQuestionRequest $request)
     {
-        Validator::make($request->all(), [
-            'topic_id' => 'required|exists:topics,id',
-            'question' => 'required|string|max:65000',
-            'options' => [
-                'required', 'array', new ValidOneChoiceOptions
-            ],
-            'options.*.option' => 'required|max:100',
-            'options.*.is_right' => 'required|boolean',
-        ])->validate();
-      
         $question = Question::create([
             'topic_id' => $request->topic_id,
             'type' => Question::TYPE_ONE_CHOICE,
@@ -77,18 +66,8 @@ class OneChoiceQuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOneChoiceQuestionRequest $request, $id)
     {
-        Validator::make($request->all(), [
-            'topic_id' => 'required|exists:topics,id',
-            'question' => 'required|string|max:65000',
-            'options' => [
-                'required', 'array', new ValidOneChoiceOptions
-            ],
-            'options.*.option' => 'required|max:100',
-            'options.*.is_right' => 'required|boolean',
-        ])->validate();
-        
         $question = Question::findOrFail($id);
 
         foreach ($request->options as $option) {

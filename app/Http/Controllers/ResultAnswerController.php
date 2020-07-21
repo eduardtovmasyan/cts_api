@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use Illuminate\Http\Request;
 use App\Http\Resources\Answer as AnswerResource;
 
 class ResultAnswerController extends Controller

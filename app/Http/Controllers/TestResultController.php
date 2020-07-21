@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Result;
-use Illuminate\Http\Request;
 use App\Http\Resources\Result as ResultResource;
 
 class TestResultController extends Controller

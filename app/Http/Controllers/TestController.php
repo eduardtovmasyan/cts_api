@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Test;
 use Validator;
 use App\TestQuestion;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Resources\TestShort;
-use App\Rules\ValidTestQuestionTopic;
+use App\Http\Requests\CreateTestRequest;
+use App\Http\Requests\UpdateTestRequest;
 use App\Http\Resources\Test as TestResource;
 
 class TestController extends Controller
@@ -31,22 +30,8 @@ class TestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTestRequest $request)
     {
-        Validator::make($request->all(), [
-            'subject_id' => 'required|exists:subjects,id',
-            'group_id' => 'nullable|exists:groups,id',
-            'start' => 'required|date|after:now',
-            'end' => 'required|date|after:start',
-            'description' => 'nullable|string|max:65000',
-            'title' => 'required|string|max:255',
-            'questions' => 'required|array',
-            'questions.*.score' => 'required|integer|between:1,100',
-            'questions.*.id' => [
-                'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
-            ],
-        ])->validate();
-
         $questions = [];
 
         foreach ($request->questions as $i => $question) {
@@ -87,22 +72,8 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTestRequest $request, $id)
     {
-        Validator::make($request->all(), [
-            'subject_id' => 'required|exists:subjects,id',
-            'group_id' => 'nullable|exists:groups,id',
-            'start' => 'required|date|after:now',
-            'end' => 'required|date|after:start',
-            'description' => 'nullable|string|max:65000',
-            'title' => 'required|string|max:255',
-            'questions' => 'required|array',
-            'questions.*.score' => 'required|integer|between:1,100',
-            'questions.*.id' => [
-                'required', 'exists:questions,id',  new ValidTestQuestionTopic($request->subject_id)
-            ],
-        ])->validate();
-
         $questions = [];
 
         foreach ($request->questions as $i => $question) {

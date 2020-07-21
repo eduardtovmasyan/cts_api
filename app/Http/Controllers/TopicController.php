@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Topic;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
 use App\Http\Resources\Topic as TopicResource;
 
 class TopicController extends Controller
@@ -27,14 +28,8 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTopicRequest $request)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:topics,name',
-            'subject_id' => 'required|exists:subjects,id',
-            'description' => 'string|max:65000|nullable',
-        ])->validate();
-
         $topic = Topic::create([
             'name' => $request->name,
             'subject_id' => $request->subject_id,
@@ -64,14 +59,8 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTopicRequest $request, $id)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|max:100|unique:topics,name,' . $id,
-            'subject_id' => 'required|exists:subjects,id',
-            'description' => 'string|max:65000|nullable',
-        ])->validate();
-        
         $topic = Topic::findOrFail($id);
         $topic->update([
             'name' => $request->name,

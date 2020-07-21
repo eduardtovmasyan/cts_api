@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Hash;
 use App\User;
 use Validator;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Resources\Admin as AdminResource;
 
 class AdminController extends Controller
@@ -28,16 +29,8 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAdminRequest $request)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|numeric|unique:users,phone',
-            'password' => 'required|min:6',
-            'is_active' => 'required|boolean',
-        ])->validate();
-
         $admin = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -70,16 +63,8 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAdminRequest $request, $id)
     {
-        Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'phone' => 'nullable|numeric|unique:users,phone,' . $id,
-            'password' => 'required|min:6',
-            'is_active' => 'required|boolean',
-        ])->validate();
-
         $admin = User::whichAdmin()->findOrFail($id);
         $admin->update([
             'name' => $request->name,
