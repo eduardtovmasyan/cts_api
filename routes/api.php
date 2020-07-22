@@ -14,52 +14,59 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => ['auth:api']], function() {
-    Route::resource('admin', 'AdminController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
 
-    Route::resource('subject', 'SubjectController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
-    
-    Route::resource('topic', 'TopicController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
+    Route::group(['middleware' => ['is_admin']], function(){
 
-    Route::resource('group', 'GroupController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
-    
-    Route::resource('one-choice-question', 'OneChoiceQuestionController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
-    
-    Route::resource('multiple-choice-question', 'MultipleChoiceQuestionController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
+        Route::resource('admin', 'AdminController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
 
-    Route::resource('boolean-question', 'BooleanQuestionController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
+        Route::resource('subject', 'SubjectController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
+        
+        Route::resource('topic', 'TopicController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
 
-    Route::resource('testee', 'TesteeController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
+        Route::resource('group', 'GroupController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
+        
+        Route::resource('one-choice-question', 'OneChoiceQuestionController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
+        
+        Route::resource('multiple-choice-question', 'MultipleChoiceQuestionController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
 
-    Route::resource('short-answer-question', 'ShortAnswerQuestionController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
-    
-    Route::resource('test', 'TestController', [
-        'only' => ['index', 'store', 'show', 'update', 'destroy']
-    ]);
+        Route::resource('boolean-question', 'BooleanQuestionController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
 
-    Route::resource('result', 'ResultController', [
-        'only' => ['store', 'show']
-    ]);
+        Route::resource('testee', 'TesteeController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
 
-    Route::get('test/{testId}/results', 'TestResultController@index');
-    Route::get('group/{groupId}/results', 'GroupResultController@index');
-    Route::get('testee/{userId}/results', 'TesteeResultController@index');
-    Route::get('result/{resultId}/answers', 'ResultAnswerController@index');
+        Route::resource('short-answer-question', 'ShortAnswerQuestionController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
+        
+        Route::resource('test', 'TestController', [
+            'only' => ['index', 'store', 'show', 'update', 'destroy']
+        ]);
+
+        Route::group(['middleware' => ['is_testee']], function() {
+            
+            Route::resource('result', 'ResultController', [
+                'only' => ['store', 'show']
+            ]);
+
+            Route::get('test/{testId}/results', 'TestResultController@index');
+            Route::get('group/{groupId}/results', 'GroupResultController@index');
+            Route::get('testee/{userId}/results', 'TesteeResultController@index');
+            Route::get('result/{resultId}/answers', 'ResultAnswerController@index');
+        });
+    });
 });
