@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Question;
-use Illuminate\Http\Request;
 use App\Http\Resources\QuestionShort;
+use App\Http\Requests\CreateBooleanQuestionRequest;
+use App\Http\Requests\UpdateBooleanQuestionRequest;
 use App\Http\Resources\Question as BooleanQuestion;
 
 class BooleanQuestionController extends Controller
@@ -28,14 +29,8 @@ class BooleanQuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBooleanQuestionRequest $request)
     {
-        Validator::make($request->all(), [
-            'topic_id' => 'required|exists:topics,id',
-            'question' => 'required|string|max:65000',
-            'answer' => 'required|boolean',
-        ])->validate();
-      
         $question = Question::create([
             'topic_id' => $request->topic_id,
             'type' => Question::TYPE_BOOLEAN,
@@ -66,14 +61,8 @@ class BooleanQuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBooleanQuestionRequest $request, $id)
     {
-        Validator::make($request->all(), [
-            'topic_id' => 'required|exists:topics,id',
-            'question' => 'required|string|max:65000',
-            'answer' => 'required|boolean',
-        ])->validate();
-
         $question = Question::findOrFail($id);
         $question->update([
             'topic_id' => $request->topic_id,
